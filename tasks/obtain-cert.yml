@@ -1,0 +1,10 @@
+---
+- set_fact: _letsencrypt_certbot_combined_args="{{ certbot_default_args + certbot_additional_args }}"
+
+- debug: msg="Will execute - ./certbot-auto {{ _letsencrypt_certbot_combined_args | join(' ') }}"
+
+- name: "Obtain certificate for domains {{ certbot_letsencrypt_domains }}"
+  shell: ./certbot-auto {{ _letsencrypt_certbot_combined_args | join(' ') }}
+  args:
+    chdir: /opt/certbot
+    executable: /bin/bash
